@@ -84,9 +84,9 @@ const Navbar = () => {
   //   }
   // };
 
-  // const logout = () => {
-  //   dispatch(logoutSuccess());
-  // };
+  const logout = () => {
+    dispatch(logoutSuccess());
+  };
 
   return (
     <div className="navbar">
