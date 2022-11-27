@@ -85,7 +85,7 @@ const Product = () => {
         });
         try {
           const res = await axiosIntercept.post(
-            `http://localhost:5000/api/cart/addProduct/${currentUser._id}`,
+            `https://littlebasket.herokuapp.com/api/cart/addProduct/${currentUser._id}`,
             {
               productId: product._id,
               quantity: quantity,
