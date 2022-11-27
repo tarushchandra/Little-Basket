@@ -36,7 +36,7 @@ const Navbar = () => {
     const requestCart = async () => {
       try {
         const res = await axiosIntercept.get(
-          `http://localhost:5000/api/cart/find/${currentUser._id}`,
+          `https://littlebasket.herokuapp.com/api/cart/find/${currentUser._id}`,
           {
             headers: {
               access_token: Cookies.get("access_token"),
@@ -46,7 +46,7 @@ const Navbar = () => {
         console.log("cart info -", res.data);
         res.data.products.map(async (item) => {
           const getProduct = await axios.get(
-            `http://localhost:5000/api/products/find/${item.productId}`
+            `https://littlebasket.herokuapp.com/api/products/find/${item.productId}`
           );
           // console.log("get product - ", getProduct.data);
           dispatch(
@@ -67,7 +67,7 @@ const Navbar = () => {
   const logout = async () => {
     try {
       const res = await axiosIntercept.get(
-        "http://localhost:5000/api/auth/logout",
+        "https://littlebasket.herokuapp.com/api/auth/logout",
         {
           headers: {
             access_token: Cookies.get("access_token"),
