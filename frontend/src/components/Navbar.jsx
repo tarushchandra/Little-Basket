@@ -64,25 +64,25 @@ const Navbar = () => {
     requestCart();
   }, [dispatch, currentUser]);
 
-  const logout = async () => {
-    try {
-      const res = await axiosIntercept.get(
-        "https://littlebasket.herokuapp.com/api/auth/logout",
-        {
-          headers: {
-            access_token: Cookies.get("access_token"),
-          },
-        }
-      );
-      if (res.status === 200) {
-        Cookies.remove("access_token");
-        dispatch(deleteAllProducts());
-        dispatch(logoutSuccess());
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const logout = async () => {
+  //   try {
+  //     const res = await axiosIntercept.get(
+  //       "https://littlebasket.herokuapp.com/api/auth/logout",
+  //       {
+  //         headers: {
+  //           access_token: Cookies.get("access_token"),
+  //         },
+  //       }
+  //     );
+  //     if (res.status === 200) {
+  //       Cookies.remove("access_token");
+  //       dispatch(deleteAllProducts());
+  //       dispatch(logoutSuccess());
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   // const logout = () => {
   //   dispatch(logoutSuccess());
