@@ -23,7 +23,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://littlebasket.netlify.app/",
+    origin: "*",
     credentials: true,
   })
 );
