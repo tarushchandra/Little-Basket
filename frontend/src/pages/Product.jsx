@@ -35,7 +35,7 @@ const Product = () => {
     const getProduct = async () => {
       try {
         const res = await axios.get(
-          `https://littlebasket.herokuapp.com/api/products/find/${id}`
+          `http://localhost:5000/api/products/find/${id}`
         );
         setProduct(res.data);
       } catch (err) {
@@ -58,7 +58,7 @@ const Product = () => {
       if (totalCartQuantity === 0) {
         try {
           const res = await axiosIntercept.post(
-            "https://littlebasket.herokuapp.com/api/cart",
+            "http://localhost:5000/api/cart",
             {
               userId: currentUser._id,
               productId: product._id,
@@ -85,7 +85,7 @@ const Product = () => {
         });
         try {
           const res = await axiosIntercept.post(
-            `https://littlebasket.herokuapp.com/api/cart/addProduct/${currentUser._id}`,
+            `http://localhost:5000/api/cart/addProduct/${currentUser._id}`,
             {
               productId: product._id,
               quantity: quantity,

@@ -17,7 +17,7 @@ const OrderList = () => {
     const getProduct = async () => {
       try {
         const res = await axiosIntercept.get(
-          `https://littlebasket.herokuapp.com/api/orders/${currentUser._id}`,
+          `http://localhost:5000/api/orders/${currentUser._id}`,
           {
             headers: {
               access_token: Cookies.get("access_token"),
@@ -38,7 +38,7 @@ const OrderList = () => {
       item.products.map(async (product) => {
         try {
           const res = await axios.get(
-            `https://littlebasket.herokuapp.com/api/products/find/${product._id}`
+            `http://localhost:5000/api/products/find/${product._id}`
           );
           console.log("payment id -", item.paymentId, res.data);
           setProducts((prev) => [

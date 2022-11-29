@@ -30,12 +30,13 @@ const Login = () => {
     dispatch(loginStart());
     try {
       const res = await axiosCookie.post(
-        "https://littlebasket.herokuapp.com/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         {
           email,
           password,
         }
       );
+      console.log("login -", res);
       dispatch(loginSuccess(res.data));
     } catch (err) {
       dispatch(loginFailure());

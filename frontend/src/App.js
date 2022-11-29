@@ -20,9 +20,13 @@ import PaymentFailed from "./pages/PaymentFailed";
 import PaymentSuccessful from "./pages/PaymentSuccessful";
 import { useSelector } from "react-redux";
 import OrderList from "./pages/OrderList";
+import Cookies from "js-cookie";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
+  const accessToken = Cookies.get("access_token");
+
+  console.log("access token in app -", accessToken);
 
   return (
     <div className="app">
