@@ -21,7 +21,12 @@ mongoose
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://littlebasket.netlify.app",
+    credentials: true,
+  })
+);
 app.use("/api/checkout/stripe/webhook", express.raw({ type: "*/*" }));
 app.use(express.json());
 app.use(cookieParser());
