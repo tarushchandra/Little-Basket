@@ -41,10 +41,10 @@ router.post("/login", async (req, res) => {
     decyrptedPassword !== req.body.password &&
       res.status(401).json("Invalid Credentials");
 
-    console.log("Logged in User - ", foundUser);
-
     const accessToken = generateAccessToken(foundUser);
     const refreshToken = generateRefreshToken(foundUser);
+
+    console.log("Logged in User - ", foundUser);
 
     const refreshTokenToDB = new Token({
       userId: foundUser._id,
@@ -55,9 +55,9 @@ router.post("/login", async (req, res) => {
     const { password, ...others } = foundUser._doc;
 
     res
-      .cookie("access_token", accessToken)
+      .cookie("access_token", accessToken, { path: "/" })
       .status(200)
-      .json("logged in -", ...others, accessToken);
+      .json(others);
   } catch (err) {
     res.status(500).json(err);
   }
