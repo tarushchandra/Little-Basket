@@ -21,12 +21,7 @@ mongoose
 
 const app = express();
 
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use("/api/checkout/stripe/webhook", express.raw({ type: "*/*" }));
 app.use(express.json());
 app.use(cookieParser());

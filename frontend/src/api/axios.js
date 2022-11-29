@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 
 export const axiosCookie = axios.create({
   withCredentials: true,
+  credentials: "include",
 });
 
 export const axiosIntercept = axios.create();
