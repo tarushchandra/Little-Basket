@@ -55,7 +55,11 @@ router.post("/login", async (req, res) => {
     const { password, ...others } = foundUser._doc;
 
     res
-      .cookie("access_token", accessToken, { secure: true, httpOnly: true })
+      .cookie("access_token", accessToken, {
+        secure: true,
+        httpOnly: true,
+        sameSite: "none",
+      })
       .status(200)
       .json(others);
   } catch (err) {
