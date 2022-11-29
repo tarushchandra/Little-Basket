@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
       .cookie("access_token", accessToken, {
         secure: true,
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "lex",
       })
       .status(200)
       .json(others);
