@@ -60,7 +60,6 @@ router.post("/login", async (req, res) => {
         secure: true,
         httpOnly: true,
         sameSite: "none",
-        expires: new Date(Date.now() + 48 * 60 * 60 * 1000),
       })
       .status(200)
       .json(others);
