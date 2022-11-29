@@ -55,7 +55,9 @@ router.post("/login", async (req, res) => {
     const { password, ...others } = foundUser._doc;
 
     res
-      .cookie("access_token", accessToken, { path: "/" })
+      .cookie("access_token", accessToken, {
+        path: "https://littlebasket.netlify.app",
+      })
       .status(200)
       .json(others);
   } catch (err) {
