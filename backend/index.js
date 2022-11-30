@@ -25,6 +25,7 @@ const app = express();
 app.set("trust proxy", 1);
 app.use(
   session({
+    secret: "session-secret",
     saveUninitialized: false,
     resave: false,
     cookie: { secure: true },
