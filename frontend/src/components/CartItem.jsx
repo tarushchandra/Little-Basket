@@ -24,7 +24,7 @@ const CartItem = ({ cartProduct }) => {
     const makeRequest = async () => {
       try {
         const updateQuantityRes = await axiosIntercept.post(
-          `http://localhost:5000/api/cart/updateQuantity/${currentUser._id}`,
+          `https://little-basket.onrender.com/api/cart/updateQuantity/${currentUser._id}`,
           { productId: cartProduct._id, quantity: quantity },
           {
             headers: {
@@ -54,7 +54,7 @@ const CartItem = ({ cartProduct }) => {
     if (totalCartQuantity > 1) {
       try {
         const res = await axiosIntercept.post(
-          `http://localhost:5000/api/cart/deleteProduct/${currentUser._id}`,
+          `https://little-basket.onrender.com/api/cart/deleteProduct/${currentUser._id}`,
           { productId },
           {
             headers: {
@@ -76,7 +76,7 @@ const CartItem = ({ cartProduct }) => {
     } else if (totalCartQuantity === 1) {
       try {
         const res = await axiosIntercept.delete(
-          `http://localhost:5000/api/cart/${currentUser._id}`,
+          `https://little-basket.onrender.com/api/cart/${currentUser._id}`,
           { headers: { access_token: localStorage.getItem("access_token") } }
         );
         console.log("Deleted Cart - ", res);

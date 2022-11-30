@@ -17,7 +17,7 @@ const OrderList = () => {
     const getProduct = async () => {
       try {
         const res = await axiosIntercept.get(
-          `http://localhost:5000/api/orders/${currentUser._id}`,
+          `https://little-basket.onrender.com/api/orders/${currentUser._id}`,
           {
             headers: {
               access_token: localStorage.getItem("access_token"),
@@ -38,7 +38,7 @@ const OrderList = () => {
       item.products.map(async (product) => {
         try {
           const res = await axios.get(
-            `http://localhost:5000/api/products/find/${product._id}`
+            `https://little-basket.onrender.com/api/products/find/${product._id}`
           );
           console.log("payment id -", item.paymentId, res.data);
           setProducts((prev) => [
@@ -60,7 +60,7 @@ const OrderList = () => {
   // const handleDelete = async (paymentId) => {
   //   try {
   //     const res = await axiosIntercept.delete(
-  //       `http://localhost:5000/api/orders/${currentUser._id}`,
+  //       `https://little-basket.onrender.com/api/orders/${currentUser._id}`,
   //       { paymentId },
   //       {
   //         headers: {

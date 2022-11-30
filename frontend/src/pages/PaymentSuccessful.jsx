@@ -16,7 +16,7 @@ const PaymentSuccessful = () => {
     const removeAllProducts = async () => {
       try {
         const res = await axiosIntercept.delete(
-          `http://localhost:5000/api/cart/${currentUser._id}`,
+          `https://little-basket.onrender.com/api/cart/${currentUser._id}`,
           { headers: { access_token: localStorage.getItem("access_token") } }
         );
         console.log("Deleted Cart -", res);

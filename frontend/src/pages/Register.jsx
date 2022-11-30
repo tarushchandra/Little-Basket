@@ -15,11 +15,14 @@ const Register = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", {
-        name: user.name,
-        password: user.password,
-        email: user.email,
-      });
+      const res = await axios.post(
+        "https://little-basket.onrender.com/api/auth/register",
+        {
+          name: user.name,
+          password: user.password,
+          email: user.email,
+        }
+      );
       console.log(res);
       navigate("/login");
     } catch (err) {

@@ -34,8 +34,8 @@ const ProductList = () => {
       try {
         const res = await axios.get(
           category
-            ? `http://localhost:5000/api/products?category=${category}`
-            : "http://localhost:5000/api/products"
+            ? `https://little-basket.onrender.com/api/products?category=${category}`
+            : "https://little-basket.onrender.com/api/products"
         );
         setProducts(res.data);
       } catch (err) {
