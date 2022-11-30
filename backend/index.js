@@ -9,7 +9,7 @@ const orderRoutes = require("./routes/order.js");
 const jwtRefresh = require("./routes/jwt/refresh.js");
 const stripeRoute = require("./routes/payments/stripe.js");
 const razorpayRoute = require("./routes/payments/razorpay.js");
-// const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const session = require("express-session");
 
@@ -38,7 +38,7 @@ app.use(
 );
 app.use("/api/checkout/stripe/webhook", express.raw({ type: "*/*" }));
 app.use(express.json());
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use("/api/jwt", jwtRefresh);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
