@@ -11,7 +11,6 @@ const stripeRoute = require("./routes/payments/stripe.js");
 const razorpayRoute = require("./routes/payments/razorpay.js");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const session = require("express-session");
 
 dotenv.config();
 
@@ -23,14 +22,7 @@ mongoose
 const app = express();
 
 app.set("trust proxy", 1);
-app.use(
-  session({
-    secret: "session-secret",
-    saveUninitialized: false,
-    resave: false,
-    cookie: { secure: true },
-  })
-);
+
 app.use(
   cors({
     origin: "https://littlebasket.netlify.app",
