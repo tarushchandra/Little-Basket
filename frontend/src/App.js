@@ -18,15 +18,24 @@ import {
 } from "react-router-dom";
 import PaymentFailed from "./pages/PaymentFailed";
 import PaymentSuccessful from "./pages/PaymentSuccessful";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import OrderList from "./pages/OrderList";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
+import { logoutSuccess } from "./redux/features/userSlice";
 
 function App() {
-  const user = useSelector((state) => state.user.currentUser);
-  const accessToken = Cookies.get("access_token");
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const accessToken = localStorage.getItem("access_token");
+  const dispatch = useDispatch();
 
   console.log("access token in app -", accessToken);
+
+  useEffect(() => {
+    if (!accessToken) {
+      dispatch(logoutSuccess());
+    }
+  }, [dispatch, accessToken]);
 
   return (
     <div className="app">
@@ -50,11 +59,11 @@ function App() {
           </Route>
           <Route
             path="/login"
-            element={user ? <Navigate to="/" /> : <Login />}
+            element={currentUser ? <Navigate to="/" /> : <Login />}
           />
           <Route
             path="/register"
-            element={user ? <Navigate to="/" /> : <Register />}
+            element={currentUser ? <Navigate to="/" /> : <Register />}
           />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/success" element={<PaymentSuccessful />} />

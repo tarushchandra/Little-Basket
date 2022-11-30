@@ -36,17 +36,17 @@ const Navbar = () => {
     const requestCart = async () => {
       try {
         const res = await axiosIntercept.get(
-          `https://little-basket.onrender.com/api/cart/find/${currentUser._id}`,
+          `http://localhost:5000/api/cart/find/${currentUser._id}`,
           {
             headers: {
-              access_token: Cookies.get("access_token"),
+              access_token: localStorage.getItem("access_token"),
             },
           }
         );
         console.log("cart info -", res.data);
         res.data.products.map(async (item) => {
           const getProduct = await axios.get(
-            `https://little-basket.onrender.com/api/products/find/${item.productId}`
+            `http://localhost:5000/api/products/find/${item.productId}`
           );
           // console.log("get product - ", getProduct.data);
           dispatch(
@@ -67,15 +67,16 @@ const Navbar = () => {
   const logout = async () => {
     try {
       const res = await axiosIntercept.get(
-        "https://little-basket.onrender.com/api/auth/logout",
+        "http://localhost:5000/api/auth/logout",
         {
           headers: {
-            access_token: Cookies.get("access_token"),
+            access_token: localStorage.getItem("access_token"),
           },
         }
       );
       if (res.status === 200) {
-        Cookies.remove("access_token");
+        // Cookies.remove("access_token");
+        localStorage.removeItem("access_token");
         dispatch(deleteAllProducts());
         dispatch(logoutSuccess());
       }

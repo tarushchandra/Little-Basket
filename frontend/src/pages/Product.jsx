@@ -35,7 +35,7 @@ const Product = () => {
     const getProduct = async () => {
       try {
         const res = await axios.get(
-          `https://little-basket.onrender.com/api/products/find/${id}`
+          `http://localhost:5000/api/products/find/${id}`
         );
         setProduct(res.data);
       } catch (err) {
@@ -58,7 +58,7 @@ const Product = () => {
       if (totalCartQuantity === 0) {
         try {
           const res = await axiosIntercept.post(
-            "https://little-basket.onrender.com/api/cart",
+            "http://localhost:5000/api/cart",
             {
               userId: currentUser._id,
               productId: product._id,
@@ -67,7 +67,7 @@ const Product = () => {
             },
             {
               headers: {
-                access_token: Cookies.get("access_token"),
+                access_token: localStorage.getItem("access_token"),
               },
             }
           );
@@ -85,7 +85,7 @@ const Product = () => {
         });
         try {
           const res = await axiosIntercept.post(
-            `https://little-basket.onrender.com/api/cart/addProduct/${currentUser._id}`,
+            `http://localhost:5000/api/cart/addProduct/${currentUser._id}`,
             {
               productId: product._id,
               quantity: quantity,
@@ -93,7 +93,7 @@ const Product = () => {
             },
             {
               headers: {
-                access_token: Cookies.get("access_token"),
+                access_token: localStorage.getItem("access_token"),
               },
             }
           );

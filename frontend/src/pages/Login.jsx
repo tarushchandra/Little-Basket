@@ -37,6 +37,7 @@ const Login = () => {
         }
       );
       console.log("login -", res);
+      localStorage.setItem("access_token", res.data.accessToken);
       dispatch(loginSuccess(res.data));
     } catch (err) {
       dispatch(loginFailure());

@@ -28,7 +28,7 @@ const Cart = () => {
   const stripe = async () => {
     try {
       const res = await axios.post(
-        "https://little-basket.onrender.com/api/checkout/stripe/create-checkout-session",
+        "http://localhost:5000/api/checkout/stripe/create-checkout-session",
         {
           products: cart.products,
           userId: currentUser._id,
@@ -44,8 +44,8 @@ const Cart = () => {
   const removeAllProducts = async () => {
     try {
       const res = await axiosIntercept.delete(
-        `https://little-basket.onrender.com/api/cart/${currentUser._id}`,
-        { headers: { access_token: Cookies.get("access_token") } }
+        `http://localhost:5000/api/cart/${currentUser._id}`,
+        { headers: { access_token: localStorage.getItem("access_token") } }
       );
       console.log("Deleted Cart -", res);
       dispatch(deleteAllProducts());

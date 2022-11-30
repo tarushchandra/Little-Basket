@@ -10,7 +10,7 @@ const Payment = () => {
   const stripe = async () => {
     try {
       const res = await axios.post(
-        "https://little-basket.onrender.com/api/checkout/stripe/create-checkout-session",
+        "http://localhost:5000/api/checkout/stripe/create-checkout-session",
         { products }
       );
       window.location = res.data.url;
@@ -22,7 +22,7 @@ const Payment = () => {
   const razorpay = async (req, res) => {
     try {
       const res = await axios.post(
-        "https://little-basket.onrender.com/api/checkout/razorpay/checkout",
+        "http://localhost:5000/api/checkout/razorpay/checkout",
         { products }
       );
       console.log(res.data);

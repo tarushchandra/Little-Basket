@@ -24,11 +24,11 @@ const CartItem = ({ cartProduct }) => {
     const makeRequest = async () => {
       try {
         const updateQuantityRes = await axiosIntercept.post(
-          `https://little-basket.onrender.com/api/cart/updateQuantity/${currentUser._id}`,
+          `http://localhost:5000/api/cart/updateQuantity/${currentUser._id}`,
           { productId: cartProduct._id, quantity: quantity },
           {
             headers: {
-              access_token: Cookies.get("access_token"),
+              access_token: localStorage.getItem("access_token"),
             },
           }
         );
@@ -54,11 +54,11 @@ const CartItem = ({ cartProduct }) => {
     if (totalCartQuantity > 1) {
       try {
         const res = await axiosIntercept.post(
-          `https://little-basket.onrender.com/api/cart/deleteProduct/${currentUser._id}`,
+          `http://localhost:5000/api/cart/deleteProduct/${currentUser._id}`,
           { productId },
           {
             headers: {
-              access_token: Cookies.get("access_token"),
+              access_token: localStorage.getItem("access_token"),
             },
           }
         );
@@ -76,8 +76,8 @@ const CartItem = ({ cartProduct }) => {
     } else if (totalCartQuantity === 1) {
       try {
         const res = await axiosIntercept.delete(
-          `https://little-basket.onrender.com/api/cart/${currentUser._id}`,
-          { headers: { access_token: Cookies.get("access_token") } }
+          `http://localhost:5000/api/cart/${currentUser._id}`,
+          { headers: { access_token: localStorage.getItem("access_token") } }
         );
         console.log("Deleted Cart - ", res);
         dispatch(

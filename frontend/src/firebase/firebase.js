@@ -51,7 +51,7 @@ export const oAuthSignIn = (dispatch, provider) => {
 
       try {
         const res = await axios.post(
-          "https://little-basket.onrender.com/api/auth/register",
+          "http://localhost:5000/api/auth/register",
           {
             name,
             email,
@@ -62,7 +62,7 @@ export const oAuthSignIn = (dispatch, provider) => {
           dispatch(loginStart());
           try {
             const res = await axiosCookie.post(
-              "https://little-basket.onrender.com/auth/oAuth/login",
+              "http://localhost:5000/auth/oAuth/login",
               {
                 email,
               }
@@ -79,7 +79,7 @@ export const oAuthSignIn = (dispatch, provider) => {
           dispatch(loginStart());
           try {
             const res = await axiosCookie.post(
-              "https://little-basket.onrender.com/api/auth/oAuth/login",
+              "http://localhost:5000/api/auth/oAuth/login",
               {
                 email,
               }
@@ -104,7 +104,7 @@ export const oAuthSignIn = (dispatch, provider) => {
 
 //       try {
 //         const res = await axiosCookie.post(
-//           "https://little-basket.onrender.com/api/auth/oAuth/login",
+//           "http://localhost:5000/api/auth/oAuth/login",
 //           {
 //             email,
 //           }

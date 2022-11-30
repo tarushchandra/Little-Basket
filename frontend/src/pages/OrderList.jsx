@@ -10,17 +10,17 @@ const OrderList = () => {
   const [orderedProducts, setOrderedProducts] = useState([]);
   const [products, setProducts] = useState([]);
 
-  const token = Cookies.get("access_token");
+  const token = localStorage.getItem("access_token");
   console.log("token -", token);
 
   useEffect(() => {
     const getProduct = async () => {
       try {
         const res = await axiosIntercept.get(
-          `https://little-basket.onrender.com/api/orders/${currentUser._id}`,
+          `http://localhost:5000/api/orders/${currentUser._id}`,
           {
             headers: {
-              access_token: Cookies.get("access_token"),
+              access_token: localStorage.getItem("access_token"),
             },
           }
         );
@@ -38,7 +38,7 @@ const OrderList = () => {
       item.products.map(async (product) => {
         try {
           const res = await axios.get(
-            `https://little-basket.onrender.com/api/products/find/${product._id}`
+            `http://localhost:5000/api/products/find/${product._id}`
           );
           console.log("payment id -", item.paymentId, res.data);
           setProducts((prev) => [
@@ -60,7 +60,7 @@ const OrderList = () => {
   // const handleDelete = async (paymentId) => {
   //   try {
   //     const res = await axiosIntercept.delete(
-  //       `https://little-basket.onrender.com/api/orders/${currentUser._id}`,
+  //       `http://localhost:5000/api/orders/${currentUser._id}`,
   //       { paymentId },
   //       {
   //         headers: {

@@ -5,7 +5,7 @@ const generateAccessToken = (user) => {
     { _id: user._id, isAdmin: user.isAdmin },
     process.env.JWT_ACCESS,
     {
-      expiresIn: "5m",
+      expiresIn: "1s",
     }
   );
 };
