@@ -58,6 +58,7 @@ router.post("/login", async (req, res) => {
       .cookie("access_token", accessToken, {
         sameSite: "none",
         secure: true,
+        domain: ".littlebasket.netlify.app/",
       })
       .status(200)
       .json(others);
