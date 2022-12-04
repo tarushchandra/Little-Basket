@@ -44,11 +44,11 @@ router.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-router.post("/webhook", (req, res) => {
+router.post("/webhook", async (req, res) => {
   const sig = req.headers["stripe-signature"];
   let event;
   try {
-    event = stripe.webhooks.constructEvent(
+    event = await stripe.webhooks.constructEvent(
       req.body,
       sig,
       process.env.STRIPE_WEBHOOK_END_SECRET
