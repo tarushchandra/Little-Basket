@@ -2,19 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { axiosIntercept } from "../api/axios";
 import "../styles.scss";
-import Cookies from "js-cookie";
 import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const OrderList = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [orderedProducts, setOrderedProducts] = useState([]);
   const [products, setProducts] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const token = localStorage.getItem("access_token");
   console.log("token -", token);
 
   useEffect(() => {
-    const getProduct = async () => {
+    const getOrderedProduct = async () => {
+      setIsLoading(true);
       try {
         const res = await axiosIntercept.get(
           `https://little-basket.onrender.com/api/orders/${currentUser._id}`,
@@ -26,11 +29,12 @@ const OrderList = () => {
         );
         console.log("ordered product - ", res.data);
         setOrderedProducts(res.data);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
     };
-    getProduct();
+    getOrderedProduct();
   }, [currentUser]);
 
   useEffect(() => {
@@ -93,85 +97,94 @@ const OrderList = () => {
   // }
 
   return (
-    <div className="order-list">
-      <h1>Your Orders</h1>
-      <div className="content">
-        {orderedProducts.length === 0 ? (
-          <h1>No orders to show</h1>
-        ) : (
-          <div className="items">
-            {orderedProducts.map((item) => {
-              return (
-                <div key={item._id} className="item">
-                  <div className="top">
-                    <div className="left">
-                      <div className="order-placed">
-                        <h3>Order Placed</h3>
-                        <p>{item.createdAt.split("T")[0]}</p>
+    <>
+      {isLoading ? (
+        <div className="loading">
+          <CircularProgress style={{ color: "black" }} />
+        </div>
+      ) : (
+        <div className="order-list">
+          <h1>Your Orders</h1>
+          <div className="content">
+            {orderedProducts.length === 0 ? (
+              <h1>No orders to show</h1>
+            ) : (
+              <div className="items">
+                {orderedProducts.map((item) => {
+                  return (
+                    <div key={item._id} className="item">
+                      <div className="top">
+                        <div className="left">
+                          <div className="order-placed">
+                            <h3>Order Placed</h3>
+                            <p>{item.createdAt.split("T")[0]}</p>
+                          </div>
+                          <div className="sub-total">
+                            <h3>Subtotal</h3>
+                            <p>₹{item.subtotal_amount / 100}</p>
+                          </div>
+                          <div className="total">
+                            <h3>Total (after discounts)</h3>
+                            <p>₹{item.total_amount / 100}</p>
+                          </div>
+                          <div className="shipment">
+                            <h3>Shipment</h3>
+                            <p>Pending</p>
+                          </div>
+                        </div>
+                        <div className="right">
+                          <div className="order-id">
+                            <h3>Order ID</h3>
+                            <p>{item.paymentId}</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="sub-total">
-                        <h3>Subtotal</h3>
-                        <p>₹{item.subtotal_amount / 100}</p>
+                      <div className="middle">
+                        <div className="left">
+                          {Object.keys(groupedProducts).map((key) => {
+                            if (item.paymentId === key) {
+                              return groupedProducts[key].map((product) => {
+                                return (
+                                  <div key={product._id} className="product">
+                                    <img src={product.img} />
+                                    <div>
+                                      <h4>{product.title}</h4>
+                                      <p>₹{product.price}</p>
+                                      <p>{product.quantity}</p>
+                                    </div>
+                                  </div>
+                                );
+                              });
+                            }
+                          })}
+                        </div>
+                        <div className="right">
+                          <div className="address">
+                            <h3>Address</h3>
+                            <p>{item.address.line1}</p>
+                            <p>
+                              {item.address.city}, {item.address.state},{" "}
+                              {item.address.country} -{" "}
+                              {item.address.postal_code}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="total">
-                        <h3>Total (after discounts)</h3>
-                        <p>₹{item.total_amount / 100}</p>
-                      </div>
-                      <div className="shipment">
-                        <h3>Shipment</h3>
-                        <p>Pending</p>
-                      </div>
+                      {/* <div
+                onClick={() => handleDelete(item.paymentId)}
+                className="bottom"
+              >
+                <h2>Delete Order</h2>
+              </div> */}
                     </div>
-                    <div className="right">
-                      <div className="order-id">
-                        <h3>Order ID</h3>
-                        <p>{item.paymentId}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="middle">
-                    <div className="left">
-                      {Object.keys(groupedProducts).map((key) => {
-                        if (item.paymentId === key) {
-                          return groupedProducts[key].map((product) => {
-                            return (
-                              <div key={product._id} className="product">
-                                <img src={product.img} />
-                                <div>
-                                  <h4>{product.title}</h4>
-                                  <p>₹{product.price}</p>
-                                  <p>{product.quantity}</p>
-                                </div>
-                              </div>
-                            );
-                          });
-                        }
-                      })}
-                    </div>
-                    <div className="right">
-                      <div className="address">
-                        <h3>Address</h3>
-                        <p>{item.address.line1}</p>
-                        <p>
-                          {item.address.city}, {item.address.state},{" "}
-                          {item.address.country} - {item.address.postal_code}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <div
-                  onClick={() => handleDelete(item.paymentId)}
-                  className="bottom"
-                >
-                  <h2>Delete Order</h2>
-                </div> */}
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

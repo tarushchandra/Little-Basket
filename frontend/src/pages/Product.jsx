@@ -10,7 +10,6 @@ import {
   getProducts,
   getQuantity,
 } from "../redux/features/cartSlice";
-import Cookies from "js-cookie";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const Product = () => {
