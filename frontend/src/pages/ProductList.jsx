@@ -4,12 +4,14 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ProductList = () => {
   const query = useLocation();
   const category = query.search.split("=")[1];
   const [productTitle, setProductTitle] = useState("All Products");
 
+  const [isLoading, setIsLoading] = useState(false);
   const [rating, setRating] = useState(null);
   const [filters, setFilters] = useState({});
   const [products, setProducts] = useState([]);
@@ -31,6 +33,7 @@ const ProductList = () => {
 
   useEffect(() => {
     const getProducts = async () => {
+      setIsLoading(true);
       try {
         const res = await axios.get(
           category
@@ -38,6 +41,7 @@ const ProductList = () => {
             : "https://little-basket.onrender.com/api/products"
         );
         setProducts(res.data);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -74,74 +78,82 @@ const ProductList = () => {
   console.log(filteredProducts);
 
   return (
-    <div className="trending-products">
-      <h1>{productTitle}</h1>
-      <div className="wrapper">
-        <div className="products-controller">
-          <div className="filter">
-            <h2>Filter Products:</h2>
-            <div>
-              <select name="rating" onChange={handleRating}>
-                <option disabled selected>
-                  Rating
-                </option>
-                <option>5 Stars</option>
-                <option>4 Stars</option>
-                <option>3 Stars</option>
-                <option>2 Stars</option>
-                <option>1 Star</option>
-              </select>
-              {category === "apparels" && (
-                <select name="size" onChange={handleFilters}>
-                  <option disabled selected>
-                    Size
-                  </option>
-                  <option>S</option>
-                  <option>M</option>
-                  <option>L</option>
-                </select>
-              )}
-              {category === "tech" && (
-                <select name="device" onChange={handleFilters}>
-                  <option disabled selected>
-                    Devices
-                  </option>
-                  <option>Smartphones</option>
-                  <option>Laptops</option>
-                  <option>TVs</option>
-                </select>
-              )}
+    <>
+      {isLoading ? (
+        <div className="loading">
+          <CircularProgress style={{ color: "black" }} />
+        </div>
+      ) : (
+        <div className="trending-products">
+          <h1>{productTitle}</h1>
+          <div className="wrapper">
+            <div className="products-controller">
+              <div className="filter">
+                <h2>Filter Products:</h2>
+                <div>
+                  <select name="rating" onChange={handleRating}>
+                    <option disabled selected>
+                      Rating
+                    </option>
+                    <option>5 Stars</option>
+                    <option>4 Stars</option>
+                    <option>3 Stars</option>
+                    <option>2 Stars</option>
+                    <option>1 Star</option>
+                  </select>
+                  {category === "apparels" && (
+                    <select name="size" onChange={handleFilters}>
+                      <option disabled selected>
+                        Size
+                      </option>
+                      <option>S</option>
+                      <option>M</option>
+                      <option>L</option>
+                    </select>
+                  )}
+                  {category === "tech" && (
+                    <select name="device" onChange={handleFilters}>
+                      <option disabled selected>
+                        Devices
+                      </option>
+                      <option>Smartphones</option>
+                      <option>Laptops</option>
+                      <option>TVs</option>
+                    </select>
+                  )}
+                </div>
+              </div>
+              <div className="sort">
+                <h2>Sort Products:</h2>
+                <div>
+                  <select>
+                    <option disabled selected>
+                      Price
+                    </option>
+                    <option>Low to High</option>
+                    <option>High to Low</option>
+                  </select>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="sort">
-            <h2>Sort Products:</h2>
-            <div>
-              <select>
-                <option disabled selected>
-                  Price
-                </option>
-                <option>Low to High</option>
-                <option>High to Low</option>
-              </select>
+            <div className="products">
+              {filteredProducts.map((item) => {
+                return (
+                  <Link to={`${item._id}`} style={{ color: "black" }}>
+                    <Product
+                      img={item.img}
+                      title={item.title}
+                      rating={item.rating}
+                      price={item.price}
+                    />
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
-        <div className="products">
-          {filteredProducts.map((item) => {
-            return (
-              <Link to={`${item._id}`} style={{ color: "black" }}>
-                <Product
-                  img={item.img}
-                  title={item.title}
-                  rating={item.rating}
-                  price={item.price}
-                />
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

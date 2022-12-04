@@ -23,6 +23,7 @@ import OrderList from "./pages/OrderList";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { logoutSuccess } from "./redux/features/userSlice";
+import ScrollToTop from "./utilities/scrollToTop";
 
 function App() {
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -41,6 +42,7 @@ function App() {
   return (
     <div className="app">
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route
             element={
