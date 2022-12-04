@@ -68,6 +68,7 @@ export const oAuthSignIn = (dispatch, provider) => {
               }
             );
             dispatch(loginSuccess(res.data));
+            localStorage.setItem("access_token", res.data.accessToken);
           } catch (err) {
             dispatch(loginFailure());
             console.log(err);
@@ -85,6 +86,8 @@ export const oAuthSignIn = (dispatch, provider) => {
               }
             );
             dispatch(loginSuccess(res.data));
+            localStorage.setItem("access_token", res.data.accessToken);
+            console.log("firebase auth -", res.data);
           } catch (err) {
             dispatch(loginFailure());
             console.log(err);
