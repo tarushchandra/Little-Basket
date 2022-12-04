@@ -162,6 +162,7 @@ const OrderList = () => {
                           <div className="address">
                             <h3>Address</h3>
                             <p>{item.address.line1}</p>
+                            <p>{item.address.line2}</p>
                             <p>
                               {item.address.city}, {item.address.state},{" "}
                               {item.address.country} -{" "}
