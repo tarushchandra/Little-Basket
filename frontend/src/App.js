@@ -32,6 +32,7 @@ function App() {
   console.log("access token in app -", accessToken);
 
   useEffect(() => {
+    // window.location = "/";
     if (!accessToken) {
       dispatch(logoutSuccess());
     }

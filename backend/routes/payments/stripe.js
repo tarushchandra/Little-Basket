@@ -35,8 +35,8 @@ router.post("/create-checkout-session", async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: "http://localhost:3000/checkout/success",
-      cancel_url: "http://localhost:3000/checkout/failed",
+      success_url: "https://littlebasket.netlify.app/checkout/success",
+      cancel_url: "https://littlebasket.netlify.app/checkout/failed",
     });
     res.status(200).json(session);
   } catch (err) {
