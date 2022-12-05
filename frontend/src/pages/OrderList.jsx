@@ -11,7 +11,6 @@ const OrderList = () => {
   const [products, setProducts] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingProducts, setLoadingProducts] = useState(false);
 
   const token = localStorage.getItem("access_token");
   console.log("token -", token);
@@ -39,7 +38,6 @@ const OrderList = () => {
   }, [currentUser]);
 
   useEffect(() => {
-    setLoadingProducts(true);
     orderedProducts.map((item) => {
       item.products.map(async (product) => {
         try {
@@ -61,7 +59,6 @@ const OrderList = () => {
         }
       });
     });
-    setLoadingProducts(false);
   }, [orderedProducts]);
 
   // const handleDelete = async (paymentId) => {
@@ -101,7 +98,7 @@ const OrderList = () => {
 
   return (
     <>
-      {isLoading && loadingProducts ? (
+      {isLoading ? (
         <div className="loading">
           <CircularProgress style={{ color: "black" }} />
         </div>
