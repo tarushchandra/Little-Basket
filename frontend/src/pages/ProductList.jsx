@@ -181,13 +181,13 @@ const ProductList = () => {
             </div>
           </div>
         </div>
-        <div className="products">
-          {isLoading ? (
-            <div className="loading">
-              <CircularProgress style={{ color: "black" }} />
-            </div>
-          ) : (
-            <>
+        {isLoading ? (
+          <div className="loading">
+            <CircularProgress style={{ color: "black" }} />
+          </div>
+        ) : (
+          <>
+            <div className="products">
               {filteredProducts.map((item) => {
                 return (
                   <Link to={`${item._id}`} style={{ color: "black" }}>
@@ -200,15 +200,15 @@ const ProductList = () => {
                   </Link>
                 );
               })}
-              <Pagination
-                page={page}
-                setPage={setPage}
-                nextPage={nextPage}
-                prevPage={prevPage}
-              />
-            </>
-          )}
-        </div>
+            </div>
+            <Pagination
+              page={page}
+              setPage={setPage}
+              nextPage={nextPage}
+              prevPage={prevPage}
+            />
+          </>
+        )}
       </div>
     </div>
   );
