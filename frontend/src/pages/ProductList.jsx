@@ -200,16 +200,16 @@ const ProductList = () => {
                   </Link>
                 );
               })}
+              <Pagination
+                page={page}
+                setPage={setPage}
+                nextPage={nextPage}
+                prevPage={prevPage}
+              />
             </>
           )}
         </div>
       </div>
-      <Pagination
-        page={page}
-        setPage={setPage}
-        nextPage={nextPage}
-        prevPage={prevPage}
-      />
     </div>
   );
 };
