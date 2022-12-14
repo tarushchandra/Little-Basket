@@ -377,6 +377,40 @@ body {
         }
     }
 
+    // Pagination Component 
+    .pagination {
+        display: flex;
+        gap: 1em;
+        justify-content: center;
+        align-items: center;
+
+        i {
+            color: rgb(199, 196, 196);
+            cursor: not-allowed;
+        }
+
+        i.active {
+            color: black;
+            cursor: pointer;
+        }
+
+        .page {
+            background-color: teal;
+            width: 2em;
+            height: 2em;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            p {
+                color: white;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+        }
+    }
+
     // Footer Component
     .footer {
         display: flex;

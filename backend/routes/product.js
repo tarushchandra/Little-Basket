@@ -63,14 +63,104 @@ router.get("/find/:id", async (req, res) => {
 // Get All Products
 router.get("/", async (req, res) => {
   const qCategory = req.query.category;
+  const qRating = parseInt(req.query.rating);
+  const limit = parseInt(req.query.limit);
+  const page = parseInt(req.query.page);
+  const qSort = parseInt(req.query.sort);
+  const result = {};
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  console.log(startIndex, endIndex);
+
+  if (startIndex > 0) {
+    result.prev_page = page - 1;
+  }
+
   try {
-    let products;
-    if (qCategory) {
-      products = await Product.find({ categories: { $in: [qCategory] } });
-    } else {
-      products = await Product.find();
+    // When Category and Rating, both are present
+    if (qCategory && qRating) {
+      qSort
+        ? (result.products = await Product.find({
+            rating: qRating,
+            categories: { $in: [qCategory] },
+          })
+            .limit(limit)
+            .skip(startIndex)
+            .sort({ price: qSort }))
+        : (result.products = await Product.find({
+            rating: qRating,
+            categories: { $in: [qCategory] },
+          })
+            .limit(limit)
+            .skip(startIndex));
+
+      const totalProducts = await Product.find({
+        rating: qRating,
+        category: qCategory,
+      }).count();
+
+      if (endIndex < totalProducts) {
+        result.next_page = page + 1;
+      }
     }
-    res.status(200).json(products);
+    // When only Category is present
+    else if (qCategory) {
+      qSort
+        ? (result.products = await Product.find({
+            categories: { $in: [qCategory] },
+          })
+            .limit(limit)
+            .skip(startIndex)
+            .sort({ price: qSort }))
+        : (result.products = await Product.find({
+            categories: { $in: [qCategory] },
+          })
+            .limit(limit)
+            .skip(startIndex));
+
+      const totalProducts = await Product.find({
+        categories: { $in: [qCategory] },
+      }).count();
+
+      if (endIndex < totalProducts) {
+        result.next_page = page + 1;
+      }
+    }
+    // When only Rating is present
+    else if (qRating) {
+      qSort
+        ? (result.products = await Product.find({ rating: qRating })
+            .limit(limit)
+            .skip(startIndex)
+            .sort({ price: qSort }))
+        : (result.products = await Product.find({ rating: qRating })
+            .limit(limit)
+            .skip(startIndex));
+
+      const totalProducts = await Product.find({ rating: qRating }).count();
+      if (endIndex < totalProducts) {
+        result.next_page = page + 1;
+      }
+    }
+    // Fetch all Products
+    else {
+      qSort
+        ? (result.products = await Product.find()
+            .limit(limit)
+            .skip(startIndex)
+            .sort({ price: qSort }))
+        : (result.products = await Product.find()
+            .limit(limit)
+            .skip(startIndex));
+
+      const totalProducts = await Product.find().count();
+      if (endIndex < totalProducts) {
+        result.next_page = page + 1;
+      }
+    }
+    res.status(200).json(result);
   } catch (err) {
     res.status(500).json(err);
   }
