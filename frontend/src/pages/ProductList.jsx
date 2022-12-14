@@ -71,7 +71,7 @@ const ProductList = () => {
         setPrevPage(res.data.prev_page);
         setProducts(res.data.products);
         setIsLoading(false);
-        // window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
       } catch (err) {
         console.log(err);
       }
