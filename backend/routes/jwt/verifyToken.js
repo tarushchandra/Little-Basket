@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const verifyToken = (req, res, next) => {
   const access_token = req.headers.access_token;
 
-  console.log("token -", access_token);
+  // console.log("token -", access_token);
 
   if (!access_token)
     return res.status(401).json("You are not authenticated! (token not found)");
@@ -13,7 +13,7 @@ const verifyToken = (req, res, next) => {
 
     // if everthing's okay.
     req.user = user;
-    console.log("user decoded - ", user);
+    // console.log("user decoded - ", user);
     next();
   });
 };

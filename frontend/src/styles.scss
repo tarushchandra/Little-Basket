@@ -15,7 +15,6 @@ body {
     // COMPONENTS
 
     .loading {
-        width: 100vw;
         height: 100vh;
         display: flex;
         justify-content: center;
@@ -23,8 +22,7 @@ body {
     }
 
     .loading-trending-products {
-        width: 100vw;
-        height: calc(100vh - 13em);
+        height: calc(100vh);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -92,13 +90,35 @@ body {
                 h3 {
                     font-weight: 500;
 
-                    span {
-                        font-size: 1.3rem;
+                }
+
+                .user {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.8em;
+
+                    img {
+                        max-width: 40px;
+                        border-radius: 50%;
+                        transition: 0.3s all ease-in-out;
+                        cursor: pointer;
+
+                        &:hover {
+                            transform: scale(1.1);
+                        }
+                    }
+
+                    h3 {
+
+                        span {
+                            font-size: 1.3rem;
+                        }
                     }
                 }
 
                 .sign-in {
                     cursor: pointer;
+
 
                     &:active {
                         opacity: 0.8;
@@ -203,12 +223,14 @@ body {
                 background-color: #f7fdff;
                 padding: 1em 4em;
 
+                // Product Component
                 .product {
                     width: 100%;
                     height: 100%;
                     position: relative;
                     cursor: pointer;
                     box-shadow: 0px 0px 3px rgb(25, 80, 80);
+
 
                     &:hover {
                         background-color: #000000;
@@ -243,6 +265,7 @@ body {
                         align-items: center;
                         visibility: hidden;
 
+
                         .icon {
                             background-color: white;
                             border-radius: 50%;
@@ -252,7 +275,7 @@ body {
                             justify-content: center;
                             align-items: center;
                             cursor: pointer;
-                            // transition: 0.3s all ease;
+                            // transition: 0.3s all ease-in-out;
 
                             &:hover {
                                 transform: scale(1.1);

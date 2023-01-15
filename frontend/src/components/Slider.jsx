@@ -5,6 +5,7 @@ import { sliderItems } from "../data/data";
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Controls slider transtion
   useEffect(() => {
     const transition = setInterval(() => {
       setCurrentSlide((oldCount) => {
@@ -50,7 +51,7 @@ const Slider = () => {
               style={{ backgroundColor: `${item.bg}` }}
             >
               <div className="img-container">
-                <img src={item.img} alt="img" />
+                <img loading="eager" src={item.img} alt="img" />
               </div>
               <div className="info-container">
                 <h1 className="title">{item.title}</h1>

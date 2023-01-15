@@ -4,7 +4,6 @@ import {
   getAuth,
   GoogleAuthProvider,
   FacebookAuthProvider,
-  TwitterAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
 import axios from "axios";
@@ -45,54 +44,22 @@ export const facebookProvider = new FacebookAuthProvider();
 export const oAuthSignIn = (dispatch, provider) => {
   signInWithPopup(auth, provider)
     .then(async (result) => {
-      console.log(result);
+      console.log("oauth -", result);
       const name = result.user.displayName;
       const email = result.user.email;
+      const avatar = result.user.photoURL;
 
       try {
-        const res = await axios.post(
-          "https://little-basket.onrender.com/api/auth/register",
-          {
-            name,
-            email,
-          }
+        const res = await axiosCookie.post(
+          "https://little-basket.onrender.com/api/auth/oAuth/login",
+          { name, email, avatar }
         );
-        console.log(res);
-        if (res.status === 200) {
-          dispatch(loginStart());
-          try {
-            const res = await axiosCookie.post(
-              "https://little-basket.onrender.com/auth/oAuth/login",
-              {
-                email,
-              }
-            );
-            dispatch(loginSuccess(res.data));
-            localStorage.setItem("access_token", res.data.accessToken);
-          } catch (err) {
-            dispatch(loginFailure());
-            console.log(err);
-          }
-        }
+        console.log("oauth login", res);
+        localStorage.setItem("access_token", res.data.accessToken);
+        dispatch(loginSuccess(res.data));
       } catch (err) {
+        dispatch(loginFailure());
         console.log(err);
-        if (err.response.status === 500) {
-          dispatch(loginStart());
-          try {
-            const res = await axiosCookie.post(
-              "https://little-basket.onrender.com/api/auth/oAuth/login",
-              {
-                email,
-              }
-            );
-            dispatch(loginSuccess(res.data));
-            localStorage.setItem("access_token", res.data.accessToken);
-            console.log("firebase auth -", res.data);
-          } catch (err) {
-            dispatch(loginFailure());
-            console.log(err);
-          }
-        }
       }
     })
     .catch((err) => console.log(err));

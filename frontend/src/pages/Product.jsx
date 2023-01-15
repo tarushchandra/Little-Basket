@@ -46,6 +46,10 @@ const Product = () => {
       }
     };
     getProduct();
+
+    return () => {
+      setProduct({});
+    };
   }, [id]);
 
   function handleQuantity(op) {

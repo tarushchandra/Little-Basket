@@ -9,6 +9,7 @@ import {
   loginFailure,
   loginStart,
   loginSuccess,
+  logoutSuccess,
 } from "../redux/features/userSlice";
 import {
   facebookProvider,
@@ -24,6 +25,15 @@ const Login = () => {
   const { isFetching, isError, currentUser } = useSelector(
     (state) => state.user
   );
+
+  // const google = async (e) => {
+  //   window.open("https://little-basket.onrender.com/api/oauth/google", "_self");
+  // };
+
+  // Remove Invalid Text
+  useEffect(() => {
+    dispatch(logoutSuccess());
+  }, [dispatch]);
 
   const login = async (e) => {
     e.preventDefault();

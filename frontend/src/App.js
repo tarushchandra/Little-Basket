@@ -1,14 +1,11 @@
+import React from "react";
+import "./styles.scss";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import Newsletter from "./components/Newsletter";
-import ProductList from "./pages/ProductList";
 import Home from "./pages/Home";
-import "./styles.scss";
-import Product from "./pages/Product";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
+import { useSelector } from "react-redux";
+import ScrollToTop from "./utilities/scrollToTop";
+import { CircularProgress } from "@mui/material";
 import {
   BrowserRouter,
   Routes,
@@ -16,62 +13,75 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
-import PaymentFailed from "./pages/PaymentFailed";
-import PaymentSuccessful from "./pages/PaymentSuccessful";
-import { useDispatch, useSelector } from "react-redux";
-import OrderList from "./pages/OrderList";
-import Cookies from "js-cookie";
-import { useEffect } from "react";
-import { logoutSuccess } from "./redux/features/userSlice";
-import ScrollToTop from "./utilities/scrollToTop";
+import LazyLoad from "react-lazy-load";
+
+const ProductList = React.lazy(() => import("./pages/ProductList"));
+const Cart = React.lazy(() => import("./pages/Cart"));
+const OrderList = React.lazy(() => import("./pages/OrderList"));
+const Product = React.lazy(() => import("./pages/Product"));
+const PaymentSuccessful = React.lazy(() => import("./pages/PaymentSuccessful"));
+const PaymentFailed = React.lazy(() => import("./pages/PaymentFailed"));
+const Login = React.lazy(() => import("./pages/Login"));
+const Register = React.lazy(() => import("./pages/Register"));
+const Newsletter = React.lazy(() => import("./components/Newsletter"));
 
 function App() {
   const currentUser = useSelector((state) => state.user.currentUser);
   const accessToken = localStorage.getItem("access_token");
-  const dispatch = useDispatch();
 
   console.log("access token in app -", accessToken);
-
-  useEffect(() => {
-    // window.location = "/";
-    if (!accessToken) {
-      dispatch(logoutSuccess());
-    }
-  }, [dispatch, accessToken]);
+  console.log("current user -", currentUser);
 
   return (
     <div className="app">
       <BrowserRouter>
         <ScrollToTop />
-        <Routes>
-          <Route
-            element={
-              <>
-                <Navbar />
-                <Outlet />
-                <Newsletter />
-                <Footer />
-              </>
-            }
-          >
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<ProductList />} />
-            <Route path="/products/:id" element={<Product />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/orders" element={<OrderList />} />
-          </Route>
-          <Route
-            path="/login"
-            element={currentUser ? <Navigate to="/" /> : <Login />}
-          />
-          <Route
-            path="/register"
-            element={currentUser ? <Navigate to="/" /> : <Register />}
-          />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/checkout/success" element={<PaymentSuccessful />} />
-          <Route path="/checkout/failed" element={<PaymentFailed />} />
-        </Routes>
+        <React.Suspense
+          fallback={
+            <div className="loading">
+              <CircularProgress style={{ color: "black" }} />
+            </div>
+          }
+        >
+          <Routes>
+            <Route
+              element={
+                <>
+                  <Navbar />
+                  <React.Suspense
+                    fallback={
+                      <div className="loading">
+                        <CircularProgress style={{ color: "black" }} />
+                      </div>
+                    }
+                  >
+                    <Outlet />
+                  </React.Suspense>
+                  <LazyLoad threshold={0.95}>
+                    <Newsletter />
+                  </LazyLoad>
+                  <Footer />
+                </>
+              }
+            >
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<ProductList />} />
+              <Route path="/products/:id" element={<Product />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/orders" element={<OrderList />} />
+            </Route>
+            <Route
+              path="/login"
+              element={currentUser ? <Navigate to="/" /> : <Login />}
+            />
+            <Route
+              path="/register"
+              element={currentUser ? <Navigate to="/" /> : <Register />}
+            />
+            <Route path="/checkout/success" element={<PaymentSuccessful />} />
+            <Route path="/checkout/failed" element={<PaymentFailed />} />
+          </Routes>
+        </React.Suspense>
       </BrowserRouter>
     </div>
   );

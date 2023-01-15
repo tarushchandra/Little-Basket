@@ -1,7 +1,6 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { getRefreshToken } from "./getRefreshToken";
-import Cookies from "js-cookie";
 
 export const axiosCookie = axios.create({
   withCredentials: true,

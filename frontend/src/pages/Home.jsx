@@ -1,14 +1,31 @@
 import React from "react";
-import Categories from "../components/Categories";
 import Slider from "../components/Slider";
-import TrendingProducts from "../components/TrendingProducts";
+import LazyLoad from "react-lazy-load";
+import { CircularProgress } from "@mui/material";
+
+const Categories = React.lazy(() => import("../components/Categories"));
+const TrendingProducts = React.lazy(() =>
+  import("../components/TrendingProducts")
+);
 
 const Home = () => {
   return (
     <div className="home">
       <Slider />
-      <Categories />
-      <TrendingProducts />
+      <React.Suspense
+        fallback={
+          <div className="loading">
+            <CircularProgress style={{ color: "black" }} />
+          </div>
+        }
+      >
+        <LazyLoad threshold={0.9}>
+          <Categories />
+        </LazyLoad>
+        <LazyLoad threshold={1}>
+          <TrendingProducts />
+        </LazyLoad>
+      </React.Suspense>
     </div>
   );
 };

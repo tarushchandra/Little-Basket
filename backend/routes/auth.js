@@ -64,28 +64,37 @@ router.post("/login", async (req, res) => {
 router.post("/oAuth/login", async (req, res) => {
   try {
     const foundUser = await User.findOne({ email: req.body.email });
-    !foundUser && res.status(401).json("User not found");
+    let authenticatedUser;
 
-    // const decyrptedPassword = CryptoJS.AES.decrypt(
-    //   foundUser.password,
-    //   process.env.PASS_SECRET
-    // ).toString(CryptoJS.enc.Utf8);
+    if (!foundUser) {
+      // register the user
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        avatar: req.body.avatar,
+      });
+      await newUser.save();
+      console.log("user registered");
+      authenticatedUser = newUser;
+    } else {
+      // user already exists
+      console.log("user already exists");
+      authenticatedUser = foundUser;
+    }
 
-    // decyrptedPassword !== req.body.password &&
-    //   res.status(401).json("Invalid Credentials");
+    // generate accessToken
+    console.log("Logged in User - ", authenticatedUser);
 
-    console.log("Logged in User - ", foundUser);
-
-    const accessToken = generateAccessToken(foundUser);
-    const refreshToken = generateRefreshToken(foundUser);
+    const accessToken = generateAccessToken(authenticatedUser);
+    const refreshToken = generateRefreshToken(authenticatedUser);
 
     const refreshTokenToDB = new Token({
-      userId: foundUser._id,
+      userId: authenticatedUser._id,
       refreshToken: refreshToken,
     });
     await refreshTokenToDB.save();
 
-    const { password, ...others } = foundUser._doc;
+    const { password, ...others } = authenticatedUser._doc;
 
     res.status(200).json({ ...others, accessToken });
   } catch (err) {

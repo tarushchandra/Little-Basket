@@ -7,9 +7,8 @@ import {
   getQuantity,
   updateCartQuantity,
 } from "../redux/features/cartSlice";
-import { logoutSuccess } from "../redux/features/userSlice";
-import Cookies from "js-cookie";
-import { axiosIntercept } from "../api/axios";
+import { loginSuccess, logoutSuccess } from "../redux/features/userSlice";
+import { axiosCookie, axiosIntercept } from "../api/axios";
 import axios from "axios";
 
 const Navbar = () => {
@@ -32,31 +31,52 @@ const Navbar = () => {
   //   }
   // );
 
+  // OAuth Login
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const res = await axiosCookie.get(
+  //         "https://little-basket.onrender.com/api/oauth/login/success",
+  //         { withCredentials: true }
+  //       );
+  //       console.log("oauth user -", res.data);
+  //       localStorage.setItem("access_token", res.data.accessToken);
+  //       dispatch(loginSuccess(res.data));
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
+
+  // Get Cart
   useEffect(() => {
     const requestCart = async () => {
       try {
-        const res = await axiosIntercept.get(
-          `https://little-basket.onrender.com/api/cart/find/${currentUser._id}`,
-          {
-            headers: {
-              access_token: localStorage.getItem("access_token"),
-            },
-          }
-        );
-        console.log("cart info -", res.data);
-        res.data.products.map(async (item) => {
-          const getProduct = await axios.get(
-            `https://little-basket.onrender.com/api/products/find/${item.productId}`
+        if (currentUser) {
+          const res = await axiosIntercept.get(
+            `https://little-basket.onrender.com/api/cart/find/${currentUser._id}`,
+            {
+              headers: {
+                access_token: localStorage.getItem("access_token"),
+              },
+            }
           );
-          // console.log("get product - ", getProduct.data);
-          dispatch(
-            addProduct({
-              ...getProduct.data,
-              quantity: item.quantity,
-              size: item.size,
-            })
-          );
-        });
+          console.log("cart info -", res.data);
+          res.data?.products.map(async (item) => {
+            const getProduct = await axios.get(
+              `https://little-basket.onrender.com/api/products/find/${item.productId}`
+            );
+            // console.log("get product - ", getProduct.data);
+            dispatch(
+              addProduct({
+                ...getProduct.data,
+                quantity: item.quantity,
+                size: item.size,
+              })
+            );
+          });
+        }
       } catch (err) {
         console.log(err);
       }
@@ -104,9 +124,12 @@ const Navbar = () => {
         </div> */}
         <div className="user-info">
           {currentUser ? (
-            <h3>
-              Hello, <span>{currentUser?.name}</span>
-            </h3>
+            <div className="user">
+              <img src={currentUser?.avatar} alt="user-avatar" />
+              <h3>
+                Hello, <span>{currentUser?.name}</span>
+              </h3>
+            </div>
           ) : (
             <Link
               to="/login"

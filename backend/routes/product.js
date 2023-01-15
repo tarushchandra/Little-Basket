@@ -72,7 +72,7 @@ router.get("/", async (req, res) => {
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 
-  console.log(startIndex, endIndex);
+  // console.log(startIndex, endIndex);
 
   if (startIndex > 0) {
     result.prev_page = page - 1;

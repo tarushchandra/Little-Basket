@@ -18,7 +18,7 @@ router.post("/refresh", async (req, res) => {
         if (err) return res.status(404).json(err);
 
         await Token.deleteOne();
-        console.log("user in refresh -", user);
+        // console.log("user in refresh -", user);
 
         const newAccessToken = generateAccessToken(user);
         const newRefreshToken = generateRefreshToken(user);

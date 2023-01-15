@@ -43,11 +43,6 @@ const ProductList = () => {
     const getProducts = async () => {
       setIsLoading(true);
       try {
-        // const res = await axios.get(
-        //   category || rating
-        //     ? `https://little-basket.onrender.com/api/products?rating=${rating}&page=${page}&limit=8`
-        //     : `https://little-basket.onrender.com/api/products?page=${page}&limit=8`
-        // );
         let res;
         if (category && rating) {
           res = await axios.get(
