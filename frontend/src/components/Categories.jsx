@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { categories } from "../data/data";
+import Category from "./Category";
 
 const Categories = () => {
   return (
@@ -8,14 +8,7 @@ const Categories = () => {
       <h1>Categories</h1>
       <div className="container">
         {categories.map((item) => {
-          return (
-            <Link to={`/products?category=${item.cat}`} key={item.id}>
-              <div className="category-item">
-                <img src={item.img} />
-                <h2>{item.title}</h2>
-              </div>
-            </Link>
-          );
+          return <Category key={item.id} item={item} />;
         })}
       </div>
     </div>

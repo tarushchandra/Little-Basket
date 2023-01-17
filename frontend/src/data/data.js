@@ -56,24 +56,28 @@ export const categories = [
     img: "https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg?cs=srgb&dl=pexels-pixabay-325876.jpg&fm=jpg&_gl=1*btel96*_ga*MTkzNTk4NjkwNi4xNjY2OTMyODE4*_ga_8JE65Q40S6*MTY2NzMxNzQxNS4zLjEuMTY2NzMxNzY4OC4wLjAuMA..",
     title: "Apparels",
     cat: "apparels",
+    hash: "LGAmoFx_D~RN~SM_E3fTMvIUNMxa",
   },
   {
     id: 2,
     img: "https://images.pexels.com/photos/18104/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     title: "Tech Stacks",
     cat: "tech",
+    hash: "LWGIT8~q%MIUE2t7t7WBi^IUNGof",
   },
   {
     id: 3,
     img: "https://images.pexels.com/photos/164743/pexels-photo-164743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     title: "Instruments",
     cat: "instruments",
+    hash: "L7A0:q%M00bI00%M~qE19G00Ri_3",
   },
   {
     id: 4,
     img: "https://images.pexels.com/photos/159866/books-book-pages-read-literature-159866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     title: "Books",
     cat: "books",
+    hash: "LwKUG$M{kXxu~qRjjbof-=t6ozRk",
   },
 ];
 

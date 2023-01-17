@@ -12,20 +12,20 @@ const Home = () => {
   return (
     <div className="home">
       <Slider />
-      <React.Suspense
+      {/* <React.Suspense
         fallback={
           <div className="loading">
             <CircularProgress style={{ color: "black" }} />
           </div>
         }
-      >
-        <LazyLoad threshold={0.9}>
-          <Categories />
-        </LazyLoad>
-        <LazyLoad threshold={1}>
-          <TrendingProducts />
-        </LazyLoad>
-      </React.Suspense>
+      > */}
+      <LazyLoad threshold={0.2}>
+        <Categories />
+      </LazyLoad>
+      <LazyLoad threshold={1}>
+        <TrendingProducts />
+      </LazyLoad>
+      {/* </React.Suspense> */}
     </div>
   );
 };

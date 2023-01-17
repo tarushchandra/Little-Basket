@@ -57,9 +57,7 @@ function App() {
                   >
                     <Outlet />
                   </React.Suspense>
-                  <LazyLoad threshold={0.95}>
-                    <Newsletter />
-                  </LazyLoad>
+                  <Newsletter />
                   <Footer />
                 </>
               }

@@ -15,7 +15,7 @@ const TrendingProducts = () => {
       setIsLoading(true);
       try {
         const res = await axios.get(
-          "https://little-basket.onrender.com/api/products?limit=8"
+          "http://localhost:5000/api/products?limit=8"
         );
         console.log("trending products -", res.data);
         setProducts(res.data.products);
